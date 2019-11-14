@@ -1,6 +1,22 @@
+/* test set font 1
+p {
+	font-family: 'ThatNogoFontCasual';
+	font-weight: normal;
+	font-style: normal;
+}  */
+/* test set font 2
+p {
+	font-family: 'OpenDyslexicRegular';
+	font-weight: normal;
+	font-style: normal;
+}  */
+/* test set font 3
+p {
+	font-family: 'AghjaMedium';
+	font-weight: normal;
+	font-style: normal;
+}  */
 body
 {
-	font-family: 'GnraleStationExtended';
-	font-weight: normal;
-	font-style: normal; 
+	background-image: url("../images/restaurant.png");
 }

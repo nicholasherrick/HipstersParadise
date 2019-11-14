@@ -36,3 +36,12 @@ body
 	font-size: 30px;
 	margin: 0 20px;
 }
+
+#content
+{
+	margin: 0 auto;
+	width: 600px;
+	height: 80px;
+	margin-top: 200px;
+	background-color: aliceblue;
+}

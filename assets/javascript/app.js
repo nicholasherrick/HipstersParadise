@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var firebaseConfig = {
     apiKey: "AIzaSyDlFw-SrUXQdgRDqUvTkPZcwQm-tgIIgAw",
     authDomain: "hipsters-paradise.firebaseapp.com",
@@ -112,8 +111,7 @@ function showVenues(json) {
     }
 }
 
-=======
-$("#search-button").on("click", function getBreweriesByCity() {
+$("#search-button").on("click", function getBreweriesByCity(event) {
     event.preventDefault();
     var byCity = $("#search").val().toLowerCase().trim().split(" ").join("_");
     var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + byCity;
@@ -139,4 +137,3 @@ $("#search-button").on("click", function getBreweriesByCity() {
         }
     });
 });
->>>>>>> added open brewrey api functionality based on a search by city

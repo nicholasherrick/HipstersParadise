@@ -20,15 +20,7 @@ body
 
 #header
 {
-	line-height: 80px;
 	border-bottom: 5px solid #c99686
-}
-
-#header-title
-{
-	font-family: 'ThatNogoFontCasual';
-	font-size: 30px;
-	margin: 0 20px;
 }
 
 .column

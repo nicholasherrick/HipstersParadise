@@ -1,6 +1,48 @@
+.font-nogo
+{
+	font-family: 'ThatNogoFontCasual';
+	font-weight: normal;
+	font-style: normal;
+} 
+
+.font-dyslexic
+{
+	font-family: 'OpenDyslexicRegular';
+	font-weight: normal;
+	font-style: normal;
+} 
+
+.font-agh
+{
+	font-family: 'AghjaMedium';
+	font-weight: normal;
+	font-style: normal;
+}
+
 body
 {
-	font-family: 'GnraleStationExtended';
-	font-weight: normal;
-	font-style: normal; 
+	background-image: url("../images/restaurant.png");
+}
+
+#header
+{
+	background-image: url("../images/so-white.png");
+	background-color: white; 
+	height: 80px;
+	line-height: 80px;
+	border-bottom: 5px solid #c99686
+}
+
+#header-title
+{
+	font-family: 'ThatNogoFontCasual';
+	font-size: 30px;
+	margin: 0 20px;
+}
+
+/* placeholder to see the divs */
+.column
+{
+	border: 1px solid black;
+	margin-top: 50px;
 }

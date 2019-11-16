@@ -1,4 +1,4 @@
-$("#search-button").on("click", function getBreweriesByCity() {
+$("#search-button").on("click", function getBreweriesByCity(event) {
     event.preventDefault();
     var byCity = $("#search").val().toLowerCase().trim().split(" ").join("_");
     var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + byCity;

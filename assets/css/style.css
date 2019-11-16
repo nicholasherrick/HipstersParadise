@@ -1,21 +1,24 @@
-/* test set font 1
-p {
+.font-nogo
+{
 	font-family: 'ThatNogoFontCasual';
 	font-weight: normal;
 	font-style: normal;
-}  */
-/* test set font 2
-p {
+} 
+
+.font-dyslexic
+{
 	font-family: 'OpenDyslexicRegular';
 	font-weight: normal;
 	font-style: normal;
-}  */
-/* test set font 3
-p {
+} 
+
+.font-agh
+{
 	font-family: 'AghjaMedium';
 	font-weight: normal;
 	font-style: normal;
-}  */
+}
+
 body
 {
 	background-image: url("../images/restaurant.png");
@@ -37,11 +40,9 @@ body
 	margin: 0 20px;
 }
 
-#content
+/* placeholder to see the divs */
+.column
 {
-	margin: 0 auto;
-	width: 600px;
-	height: 80px;
-	margin-top: 200px;
-	background-color: aliceblue;
+	border: 1px solid black;
+	margin-top: 50px;
 }

@@ -25,12 +25,11 @@ function getMapData(search) {
         type: "GET",
         url: url + queryTerm,
         success: function (response) {
-            if(response[0]){
+            if(response[0].address.city){
                 console.log(response);
                 var city = response[0].address.city;
                 //var postcode = response[0].address.postcode;
                 var state = response[0].address.state;
-                var country = response[0].address.country;
                 var lat = response[0].lat;
                 var lon = response[0].lon;
             }else{

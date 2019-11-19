@@ -41,7 +41,6 @@ function getMapData(search) {
                 city: city,
                 //postcode: postcode,
                 state: state,
-                country: country,
                 lat: lat,
                 lon: lon
             })

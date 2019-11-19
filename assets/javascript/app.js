@@ -62,7 +62,6 @@ $('#getLocation').on('click', function () {
 });
 
 $("#search").keypress(function (event) {
-    console.log("Key code = " + event.which);
     if (event.which == 13) {
         event.preventDefault();
         $("tbody").empty();

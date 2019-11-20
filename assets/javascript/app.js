@@ -15,6 +15,7 @@ var currentSearch;
 
 
 function getMapData(search) {
+    $("#events > tbody").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {
@@ -66,7 +67,6 @@ $('#getLocation').on('click', function () {
 $("#search").keypress(function (event) {
     if (event.which == 13) {
         event.preventDefault();
-        $("#events > tbody").empty();
         getMapData($("#search").val());
         currentSearch = $('#search').val().trim();
     }
@@ -134,7 +134,6 @@ database.ref('users/' + userKey).on('child_added', function(snapshot){
 });
 
 $(document.body).on('click', '.restoreSearch', function(){
-    $("#events > tbody").empty();
     let search = $(this).data('search');
     getMapData(search);
 });

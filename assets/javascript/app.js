@@ -135,5 +135,5 @@ database.ref('users/' + userKey).on('child_added', function(snapshot){
 
 $(document.body).on('click', '.restoreSearch', function(){
     let search = $(this).data('search');
-    getMapData(search);
+    getMapData(search.toString());
 });

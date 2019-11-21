@@ -124,16 +124,29 @@ function getBreweriesByCity(city) {
     }).then(function(response) {
         console.log(response);
         for (var i = 0; i < response.length; i++) {
-            var newRow1 = $("<tr>").append(
-                $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
-            );
-            var newRow2 = $("<tr>").append(
-                $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
-            );
-            var newRow3 = $("<tr>").append(
-                $("<td>" + response[i].phone + "</td>")
-            );
-            $("#brewreys").append(newRow1, newRow2, newRow3);
+            if (response[i].website_url === undefined || response[i].website_url.length == 0) {
+                var newRow1 = $("<tr>").append(
+                    $("<td>" + response[i].name + " (no website)</td>")
+                );
+                var newRow2 = $("<tr>").append(
+                    $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
+                );
+                var newRow3 = $("<tr>").append(
+                    $("<td>" + response[i].phone + "</td>")
+                );
+                $("#brewreys").append(newRow1, newRow2, newRow3);
+            } else {
+                var newRow1 = $("<tr>").append(
+                    $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+                );
+                var newRow2 = $("<tr>").append(
+                    $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
+                );
+                var newRow3 = $("<tr>").append(
+                    $("<td>" + response[i].phone + "</td>")
+                );
+                $("#brewreys").append(newRow1, newRow2, newRow3);
+            }
         }
     });
 };

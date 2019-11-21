@@ -15,7 +15,7 @@ var currentSearch;
 
 function getMapData(search) {
     $("#events > tbody").empty();
-    $("#brewerys > tbody").empty();
+    $("#breweries > tbody").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {
@@ -101,7 +101,7 @@ function showVenues(json) {
         for (var i = 0; i < events.length; i++) {
             console.log(JSON.stringify(events[i]));
             var newRow = $("<tr>").append(
-                $("<td><a href=\"" + events[i].url + "\" style=\"display:block;\">" + events[i].name + "</a></td>")
+                $("<td><a target='_blank' href=\"" + events[i].url + "\" style=\"display:block;\">" + events[i].name + "</a></td>")
             );
             $("#events > tbody").append(newRow);
         }
@@ -123,15 +123,15 @@ function getBreweriesByCity(city) {
         console.log(response);
         for (var i = 0; i < response.length; i++) {
             var newRow1 = $("<tr>").append(
-                $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+                $("<td><a target='_blank' href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
             );
             var newRow2 = $("<tr>").append(
-                $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
+                $("<td>Address: " + response[i].street + " " + response[i].postal_code + "</td>")
             );
             var newRow3 = $("<tr>").append(
-                $("<td>" + response[i].phone + "</td>")
+                $("<td style='border-bottom:1px solid #000;'>Phone: " + response[i].phone + "</td>")
             );
-            $("#brewerys").append(newRow1, newRow2, newRow3);
+            $("#breweries").append(newRow1, newRow2, newRow3);
         }
     });
 };

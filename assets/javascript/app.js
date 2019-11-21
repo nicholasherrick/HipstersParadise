@@ -16,6 +16,7 @@ var currentSearch;
 
 function getMapData(search) {
     $("#events > tbody").empty();
+    $("#brewreys > tbody").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {
@@ -44,6 +45,7 @@ function getMapData(search) {
                     lon: lon
                 });
                 findSuggest(lat + "," + lon);
+                getBreweriesByCity(city);
             } else {
                 console.log(response);
                 console.log('Invalid search');
@@ -114,6 +116,27 @@ function showVenues(json) {
     }
 }
 
+function getBreweriesByCity(city) {
+    var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&page=1&per_page=5";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        for (var i = 0; i < response.length; i++) {
+            var newRow1 = $("<tr>").append(
+                $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+            );
+            var newRow2 = $("<tr>").append(
+                $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
+            );
+            var newRow3 = $("<tr>").append(
+                $("<td>" + response[i].phone + "</td>")
+            );
+            $("#brewerys").append(newRow1, newRow2, newRow3);
+        }
+    });
+};
 
 database.ref('.info/connected').on('value', function(snapshot){
     if(snapshot.val() && !localStorage.getItem('userkey')){

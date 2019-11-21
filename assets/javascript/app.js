@@ -16,7 +16,7 @@ var currentSearch;
 
 function getMapData(search) {
     $("#events > tbody").empty();
-    $("#brewreys > tbody").empty();
+    $("#brewerys > tbody").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {

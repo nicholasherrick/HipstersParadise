@@ -42,6 +42,7 @@ function getMapData(search) {
                     lon: lon
                 });
                 findSuggest(lat + "," + lon);
+                getBreweriesByCity(city);
             } else {
                 console.log(response);
                 console.log('Incorrect search');
@@ -65,7 +66,7 @@ $("#search").keypress(function (event) {
     if (event.which == 13) {
         event.preventDefault();
         $("tbody").empty();
-        getMapData($("#search").val());
+        getMapData($("#search").val().trim().split(" ").join("_"));
     }
 });
 
@@ -111,29 +112,24 @@ function showVenues(json) {
     }
 }
 
-$("#search-button").on("click", function getBreweriesByCity(event) {
-    event.preventDefault();
-    var byCity = $("#search").val().toLowerCase().trim().split(" ").join("_");
-    var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + byCity;
+function getBreweriesByCity(city) {
+    var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&page=1&per_page=5";
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function(response) {
         console.log(response);
-        for (var i =0; i < response.length; i++) {
-            var div = $("#div-3");
-            var name = response[i].name;
-            var city = response[i].city;
-            var address = response[i].street + " " + response[i].postal_code;
-            var newText1 = $("<p>");
-            var newText2 = $("<p>");
-            var newText3 = $("<p>");
-            newText1.append(name);
-            newText2.append("City: " + city);
-            newText3.append("Address: " + address);
-            div.append(newText1);
-            div.append(newText2);
-            div.append(newText3);
+        for (var i = 0; i < response.length; i++) {
+            var newRow1 = $("<tr>").append(
+                $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+            );
+            var newRow2 = $("<tr>").append(
+                $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
+            );
+            var newRow3 = $("<tr>").append(
+                $("<td>" + response[i].phone + "</td>")
+            );
+            $("#brewreys").append(newRow1, newRow2, newRow3);
         }
     });
-});
+};

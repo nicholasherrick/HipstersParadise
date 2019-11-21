@@ -101,7 +101,7 @@ function showVenues(json) {
         for (var i = 0; i < events.length; i++) {
             console.log(JSON.stringify(events[i]));
             var newRow = $("<tr>").append(
-                $("<td><a href=\"" + events[i].url + "\" style=\"display:block;\">" + events[i].name + "</a></td>")
+                $("<td><a target='_blank' href=\"" + events[i].url + "\" style=\"display:block;\">" + events[i].name + "</a></td>")
             );
             $("#events > tbody").append(newRow);
         }
@@ -123,7 +123,7 @@ function getBreweriesByCity(city) {
         console.log(response);
         for (var i = 0; i < response.length; i++) {
             var newRow1 = $("<tr>").append(
-                $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+                $("<td><a target='_blank' href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
             );
             var newRow2 = $("<tr>").append(
                 $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")

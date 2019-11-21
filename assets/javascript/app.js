@@ -66,7 +66,7 @@ $("#search").keypress(function (event) {
     if (event.which == 13) {
         event.preventDefault();
         $("tbody").empty();
-        getMapData($("#search").val().trim().split(" ").join("_"));
+        getMapData($("#search").val().trim());
     }
 });
 

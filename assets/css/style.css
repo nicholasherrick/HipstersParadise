@@ -74,3 +74,11 @@ body
 	text-decoration: none;
 	cursor: pointer;
   }
+
+  a {
+	  color: coral;
+  }
+  
+  a:hover {
+	  color: #888;
+  }

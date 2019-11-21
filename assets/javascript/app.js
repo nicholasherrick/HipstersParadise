@@ -10,8 +10,12 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 database = firebase.database();
 
+var userKey;
+var currentSearch;
+
 
 function getMapData(search) {
+    $("#events > tbody").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {
@@ -28,7 +32,6 @@ function getMapData(search) {
             if (response[0] !== undefined && response[0].address.city) {
                 console.log(response);
                 var city = response[0].address.city;
-                //var postcode = response[0].address.postcode;
                 var state = response[0].address.state;
                 var lat = response[0].lat;
                 var lon = response[0].lon;
@@ -36,7 +39,6 @@ function getMapData(search) {
                 database.ref('search').push({
                     searchTerm: search,
                     city: city,
-                    //postcode: postcode,
                     state: state,
                     lat: lat,
                     lon: lon
@@ -45,7 +47,7 @@ function getMapData(search) {
                 getBreweriesByCity(city);
             } else {
                 console.log(response);
-                console.log('Incorrect search');
+                console.log('Invalid search');
                 findSuggest(0);
             }
         },
@@ -59,14 +61,15 @@ function getMapData(search) {
 $('#getLocation').on('click', function () {
     navigator.geolocation.getCurrentPosition(function (position) {
         getMapData(position.coords.latitude + ',' + position.coords.longitude);
+        currentSearch = position.coords.latitude + ',' + position.coords.longitude;
     });
 });
 
 $("#search").keypress(function (event) {
     if (event.which == 13) {
         event.preventDefault();
-        $("tbody").empty();
-        getMapData($("#search").val().trim());
+        getMapData($("#search").val());
+        currentSearch = $('#search').val().trim();
     }
 });
 
@@ -133,3 +136,26 @@ function getBreweriesByCity(city) {
         }
     });
 };
+
+database.ref('.info/connected').on('value', function(snapshot){
+    if(snapshot.val() && !localStorage.getItem('userkey')){
+        var user = database.ref('users').push(true);
+        userKey = user.getKey();
+        localStorage.setItem('userkey', userKey);
+    }else{
+        userKey = localStorage.getItem('userkey');
+    }
+});
+
+$('#saveButton').on('click', function(){
+    database.ref('users/' + userKey).push(currentSearch);
+});
+
+database.ref('users/' + userKey).on('child_added', function(snapshot){
+    $('#savedSearches').append('<tr><td>'+snapshot.val()+"</td><td><button class=restoreSearch data-search="+ snapshot.val() + ">Restore Search</button></tr>");
+});
+
+$(document.body).on('click', '.restoreSearch', function(){
+    let search = $(this).data('search');
+    getMapData(search.toString());
+});

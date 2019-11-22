@@ -201,7 +201,8 @@ function validateAddress(address) {
 
         $.ajax({
             type: "GET",
-            url: "https://us-zipcode.api.smartystreets.com/lookup?auth-id=022252ec-6053-af31-55a2-1c8da629fa60&auth-token=f54PmDZdC6YfHW71XSFZ&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
+            // url: "https://us-zipcode.api.smartystreets.com/lookup?auth-id=022252ec-6053-af31-55a2-1c8da629fa60&auth-token=f54PmDZdC6YfHW71XSFZ&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
+            url: "https://us-zipcode.api.smartystreets.com/lookup?key=33707087724145303&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             async: true,
             dataType: "json",
             success: function (json) {

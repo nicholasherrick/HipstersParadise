@@ -218,7 +218,8 @@ function validateAddress(address) {
 
         $.ajax({
             type: "GET",
-            url: "https://us-zipcode.api.smartystreets.com/lookup?key=33707087724145303&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
+            // url: "https://us-zipcode.api.smartystreets.com/lookup?key=33707087724145303&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
+            url: "https://us-zipcode.api.smartystreets.com/lookup?key=1782604764000742&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             async: true,
             dataType: "json",
             success: function (json) {

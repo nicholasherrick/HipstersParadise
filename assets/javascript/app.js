@@ -1,3 +1,4 @@
+// Initialise the firebase database.
 var firebaseConfig = {
     apiKey: "AIzaSyDlFw-SrUXQdgRDqUvTkPZcwQm-tgIIgAw",
     authDomain: "hipsters-paradise.firebaseapp.com",
@@ -10,12 +11,15 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 database = firebase.database();
 
+// Initialise variables.
 var userKey;
 var currentSearch;
 
+// Grabs the map data from the openstreetmap API and turns city data into latitude and longitude, as well as handling errors.
 function getMapData(search) {
     $("#events > tbody").empty();
-    $("#brewreys > tbody").empty();
+    $("#breweries > tbody").empty();
+    $("#image-div").empty();
     var url = "https://nominatim.openstreetmap.org/?format=json&limit=1&addressdetails=1&countrycodes=US&q="
     var queryTerm = '';
     for (let i = 0; i < search.length; i++) {
@@ -45,6 +49,7 @@ function getMapData(search) {
                 });
                 findSuggest(lat + "," + lon);
                 getBreweriesByCity(city);
+                getPicture(city);
             } else {
                 console.log(response);
                 console.log('Invalid search');
@@ -58,6 +63,7 @@ function getMapData(search) {
     });
 }
 
+// Checks the getLocation button and saves the search for later.
 $('#getLocation').on('click', function () {
     navigator.geolocation.getCurrentPosition(function (position) {
         getMapData(position.coords.latitude + ',' + position.coords.longitude);
@@ -65,6 +71,7 @@ $('#getLocation').on('click', function () {
     });
 });
 
+// checks when the enter key is pressed while the search bar is focused
 $("#search").keypress(function (event) {
     if (event.which == 13) {
         event.preventDefault();
@@ -72,6 +79,7 @@ $("#search").keypress(function (event) {
     }
 });
 
+// takes in coordinates and searches for venues nearby using the ticketmaster API
 function findSuggest(coordinates) {
     if (coordinates === 0) {
         showVenues(0);
@@ -93,6 +101,7 @@ function findSuggest(coordinates) {
     }
 }
 
+// 
 function showVenues(json) {
     if (json !== 0 && json._embedded.venues !== undefined) {
         var events = json._embedded.venues;
@@ -132,10 +141,10 @@ function getBreweriesByCity(city) {
                 var newRow3 = $("<tr>").append(
                     $("<td>" + response[i].phone + "</td>")
                 );
-                $("#brewreys").append(newRow1, newRow2, newRow3);
+                $("#breweries").append(newRow1, newRow2, newRow3);
             } else {
                 var newRow1 = $("<tr>").append(
-                    $("<td><a href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
+                    $("<td><a target='_blank' href=\"" + response[i].website_url + "\" style=\"display:block;\">" + response[i].name + "</a></td>")
                 );
                 var newRow2 = $("<tr>").append(
                     $("<td>" + response[i].street + " " + response[i].postal_code + "</td>")
@@ -143,7 +152,7 @@ function getBreweriesByCity(city) {
                 var newRow3 = $("<tr>").append(
                     $("<td>" + response[i].phone + "</td>")
                 );
-                $("#brewreys").append(newRow1, newRow2, newRow3);
+                $("#breweries").append(newRow1, newRow2, newRow3);
             }
         }
     });
@@ -164,7 +173,10 @@ $('#saveButton').on('click', function () {
 });
 
 database.ref('users/' + userKey).on('child_added', function (snapshot) {
-    $('#savedSearches').append('<tr><td>' + snapshot.val() + "</td><td><button class=restoreSearch data-search=" + snapshot.val() + ">Restore Search</button></tr>");
+    $('#savedSearches').append("<tr class = 'border-b-2 border-solid border-black'><td class = 'p-1 py-2'>" 
+    + snapshot.val()
+    + "</td><td><button class = 'restoreSearch hover:bg-transparent bg-gray-300' data-search="
+    + snapshot.val() + ">Restore Search</button></tr>");
 });
 
 $(document.body).on('click', '.restoreSearch', function () {
@@ -201,7 +213,6 @@ function validateAddress(address) {
 
         $.ajax({
             type: "GET",
-            // url: "https://us-zipcode.api.smartystreets.com/lookup?auth-id=022252ec-6053-af31-55a2-1c8da629fa60&auth-token=f54PmDZdC6YfHW71XSFZ&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             url: "https://us-zipcode.api.smartystreets.com/lookup?key=33707087724145303&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             async: true,
             dataType: "json",
@@ -254,3 +265,21 @@ function clearErrModal() {
     $("#search").val("");
 }
 
+function getPicture(city) {
+    var queryURL = "https://cors-anywhere.herokuapp.com/https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ca370d51a054836007519a00ff4ce59e&per_page=4&content_type=1&format=json&nojsoncallback=1&tags=" + city;
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+        for (var i = 0; i < response.photos.photo.length; i++) {
+            var image = $("<img>");
+            var flickrImages = "http://farm" + response.photos.photo[i].farm + ".staticflickr.com/" + response.photos.photo[i].server + "/" + response.photos.photo[i].id + "_" + response.photos.photo[i].secret + ".jpg"
+            image.attr("src", flickrImages);
+            image.attr("class", "images");
+            image.attr("alt", "Pictures of " + city);
+            $("#image-div").append(image);
+            console.log(image);
+        }
+    });
+};

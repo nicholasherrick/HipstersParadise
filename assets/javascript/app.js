@@ -276,7 +276,8 @@ function getPicture(city) {
             var image = $("<img>");
             var flickrImages = "http://farm" + response.photos.photo[i].farm + ".staticflickr.com/" + response.photos.photo[i].server + "/" + response.photos.photo[i].id + "_" + response.photos.photo[i].secret + ".jpg"
             image.attr("src", flickrImages);
-            image.attr("class", "images");
+            image.attr("class", "w-full sm:w-1/4 m-0 sm:m-2 border border-solid border-black rounded-0 sm:rounded-lg");
+
             image.attr("alt", "Pictures of " + city);
             $("#image-div").append(image);
             console.log(image);

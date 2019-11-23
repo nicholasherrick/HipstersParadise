@@ -79,7 +79,7 @@ $("#search").keypress(function (event) {
     }
 });
 
-// takes in coordinates and searches for venues nearby using the ticketmaster API
+// Search Ticketmaster API by coordinates
 function findSuggest(coordinates) {
     if (coordinates === 0) {
         showVenues(0);
@@ -101,7 +101,7 @@ function findSuggest(coordinates) {
     }
 }
 
-// 
+// Dynamically generate html to display values from Ticketmaster API
 function showVenues(json) {
     if (json !== 0 && json._embedded.venues !== undefined) {
         var events = json._embedded.venues;
@@ -123,6 +123,8 @@ function showVenues(json) {
     }
 }
 
+// Search Openbrewrey API for local brewreys by city and dynamically generate the html
+// to display them
 function getBreweriesByCity(city) {
     var queryURL = "https://api.openbrewerydb.org/breweries?by_city=" + city + "&page=1&per_page=5";
     $.ajax({
@@ -189,9 +191,8 @@ $(document.body).on('click', '.restoreSearch', function () {
     getMapData(search.toString());
 });
 
+// Location Validator using SmartyStreets API
 var modal = document.getElementById("errModal");
-var modalJQ = $("#errModal");
-
 function validateAddress(address) {
     var addr;
     var city = "";
@@ -205,6 +206,7 @@ function validateAddress(address) {
         else {
             addr = address.split(" ");
         }
+        // take the last value and determine whether or not it's a zip code
         state = addr.pop().trim();
         if (state.match(/^[0-9]+$/) !== null) {
             zip = state;
@@ -218,7 +220,6 @@ function validateAddress(address) {
 
         $.ajax({
             type: "GET",
-            // url: "https://us-zipcode.api.smartystreets.com/lookup?key=33707087724145303&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             url: "https://us-zipcode.api.smartystreets.com/lookup?key=1782604764000742&city=" + city.trim() + "&state=" + state.trim() + "&zipcode=" + zip.trim(),
             async: true,
             dataType: "json",
@@ -229,7 +230,7 @@ function validateAddress(address) {
                     console.log("json[0].status = " + json[0].status);
                     console.log("json[0].reason = " + json[0].reason);
 
-                    // Pop up the modal
+                    // Pop up the error modal and display the error reason
                     modal.style.display = "block";
                     $(".modal-content > p").text(json[0].reason);
                 }
@@ -271,6 +272,7 @@ function clearErrModal() {
     $("#search").val("");
 }
 
+// Get and display pics from Flickr
 function getPicture(city) {
     var queryURL = "https://cors-anywhere.herokuapp.com/https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=ca370d51a054836007519a00ff4ce59e&per_page=4&content_type=1&format=json&nojsoncallback=1&tags=" + city;
     $.ajax({

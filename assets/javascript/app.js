@@ -172,6 +172,11 @@ $('#saveButton').on('click', function () {
     database.ref('users/' + userKey).push(currentSearch);
 });
 
+$('#clear-searches').on('click', function(){
+    database.ref('users/' + userKey).remove();
+    $('#savedSearches').empty();
+})
+
 database.ref('users/' + userKey).on('child_added', function (snapshot) {
     $('#savedSearches').append("<tr class = 'border-b-2 border-solid border-black'><td class = 'p-1 py-2'>" 
     + snapshot.val()

@@ -45,7 +45,7 @@ Technology Requirements:
         a. Firebase
 ```
  
- ### Link to Page: https://kbrowngithub.github.io/Project1/
+ ### Link to Page: https://nicholasherrick.github.io/HipstersParadise/
  
  # Features
  #####

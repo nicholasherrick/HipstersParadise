@@ -1,13 +1,13 @@
 // Initialise the firebase database.
 var firebaseConfig = {
-    apiKey: "AIzaSyDlFw-SrUXQdgRDqUvTkPZcwQm-tgIIgAw",
-    authDomain: "hipsters-paradise.firebaseapp.com",
-    databaseURL: "https://hipsters-paradise.firebaseio.com",
-    projectId: "hipsters-paradise",
-    storageBucket: "hipsters-paradise.appspot.com",
-    messagingSenderId: "343184641394",
-    appId: "1:343184641394:web:45d963e7f2ac119f2421eb"
-};
+    apiKey: "AIzaSyDC8AtFnpJ7uOgnYX2UK5pkzOdJ1KxEJlY",
+    authDomain: "hipster-s-paradise.firebaseapp.com",
+    databaseURL: "https://hipster-s-paradise.firebaseio.com",
+    projectId: "hipster-s-paradise",
+    storageBucket: "hipster-s-paradise.appspot.com",
+    messagingSenderId: "944497389994",
+    appId: "1:944497389994:web:05309be0867ad0b4873bd3"
+  };
 firebase.initializeApp(firebaseConfig);
 database = firebase.database();
 
